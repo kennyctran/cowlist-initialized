@@ -5,6 +5,7 @@ import CowList from "./CowList.jsx";
 import axios from "axios";
 
 // TODO: Bug present where page will fail to compile if DB has no cows
+// TODO: Bug where does not accept submissions with single quotes ''
 
 export default class App extends React.Component {
   constructor(props) {
@@ -40,7 +41,7 @@ export default class App extends React.Component {
           };
         });
       })
-      .catch(err => console.log(err))
+      .catch((err) => console.log(err));
   }
 
   addACow(newCow) {

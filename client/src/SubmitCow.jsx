@@ -5,8 +5,8 @@ export default class SubmitCow extends Component {
     super(props);
 
     this.state = {
-      nameValue: "Name a new cow!",
-      descriptionValue: "Describe the new cow",
+      nameValue: `Name a new cow!`,
+      descriptionValue: `Describe the new cow`,
     };
   }
 
@@ -24,6 +24,8 @@ export default class SubmitCow extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
+    console.log(this.state.nameValue);
+    console.log(this.state.descriptionValue);
     if (
       this.state.nameValue.length > 0 &&
       this.state.descriptionValue.length > 0
@@ -37,7 +39,7 @@ export default class SubmitCow extends Component {
         descriptionValue: "",
       });
     } else {
-      alert('Your cow has to have a name and a description!')
+      alert("Your cow has to have a name and a description!");
     }
   }
 
