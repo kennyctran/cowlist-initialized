@@ -1,9 +1,25 @@
-const express = require('express')
-const app = express()
-const port = 3000
+const express = require('express');
+const bodyParser = require('body-parser');
+const db = require('./db'); // Connection to database
+const { cows } = require('./controllers');
 
+const app = express();
+const port = 3000;
+
+app.use(require('./middleware/logger'));
+app.use(express.json());
 app.use(express.static('./client/dist'))
 
-app.get('/', (req, res) => res.send('Hello!'))
+app.route('/api/cows')
+  .get((req, res) => {
+    cows.getAll()
+      .then((cowData) => res.status(200).send(cowData))
+      .catch((err) => res.status(500).send(err));
+  })
+  .post((req, res) => {
+    cows.post(req.body)
+      .then((msg) => res.status(201).send(msg))
+      .catch((err) => res.status(400).send(err));
+  })
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+app.listen(port, () => console.log(`Listening on port ${port}!`))
