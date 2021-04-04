@@ -18,5 +18,12 @@ module.exports = {
       .catch((err) => {
         throw Error(err);
       });
+  },
+  put: (id, cowChanges) => {
+    return cows.update(id, cowChanges)
+      .then(msg => msg)
+      .catch(err => {
+        throw Error(err);
+      });
   }
 }

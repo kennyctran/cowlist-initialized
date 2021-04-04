@@ -4,6 +4,8 @@ import SubmitCow from "./SubmitCow.jsx";
 import CowList from "./CowList.jsx";
 import axios from "axios";
 
+// TODO: Bug present where page will fail to compile if DB has no cows
+
 export default class App extends React.Component {
   constructor(props) {
     super(props);

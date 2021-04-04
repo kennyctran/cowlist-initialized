@@ -28,6 +28,10 @@ app.route('/api/cows/:id')
       .then(msg => res.status(200).send(msg))
       .catch(err => res.status(400).send('Could not delete cow'));
   })
-  .put()
+  .put((req, res) => {
+    cows.put(req.params.id, req.body)
+      .then(msg => res.status(200).end())
+      .catch(err => res.status(400).send(err));
+  })
 
 app.listen(port, () => console.log(`Listening on port ${port}!`))
