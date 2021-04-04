@@ -13,6 +13,7 @@ export default class App extends React.Component {
       allCows: [],
       isLoading: true,
     };
+
     this.handleCowClick = this.handleCowClick.bind(this);
     this.handleCowSubmit = this.handleCowSubmit.bind(this);
   }
@@ -26,7 +27,6 @@ export default class App extends React.Component {
   handleCowSubmit(newCow) {
     this.addACow(newCow)
       .then((res) => {
-        console.log(res);
         return this.fetchAllCows();
       })
       .then((res) => {

@@ -22,4 +22,12 @@ app.route('/api/cows')
       .catch((err) => res.status(400).send(err));
   })
 
+app.route('/api/cows/:id')
+  .delete((req, res) => {
+    cows.delete(req.params.id)
+      .then(msg => res.status(200).send(msg))
+      .catch(err => res.status(400).send('Could not delete cow'));
+  })
+  .put()
+
 app.listen(port, () => console.log(`Listening on port ${port}!`))
