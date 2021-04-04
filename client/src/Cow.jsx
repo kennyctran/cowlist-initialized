@@ -1,5 +1,5 @@
 import React from 'react';
 
-export default function Cow({ cow }) {
-  return <li>{cow.name}</li>
+export default function Cow({ cow, handleCowClick }) {
+  return <li onClick={() => handleCowClick(cow)}>{cow.name}</li>
 }
