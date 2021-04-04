@@ -1,8 +1,8 @@
-import React from 'react';
-import MainCow from './MainCow.jsx';
-import SubmitCow from './SubmitCow.jsx';
-import CowList from './CowList.jsx';
-import axios from 'axios';
+import React from "react";
+import MainCow from "./MainCow.jsx";
+import SubmitCow from "./SubmitCow.jsx";
+import CowList from "./CowList.jsx";
+import axios from "axios";
 
 export default class App extends React.Component {
   constructor(props) {
@@ -11,40 +11,65 @@ export default class App extends React.Component {
     this.state = {
       mainCow: {},
       allCows: [],
-      isLoading: true
-    }
-
+      isLoading: true,
+    };
     this.handleCowClick = this.handleCowClick.bind(this);
+    this.handleCowSubmit = this.handleCowSubmit.bind(this);
   }
-
 
   handleCowClick(cow) {
     this.setState({
-      mainCow: cow
-    })
+      mainCow: cow,
+    });
+  }
+
+  handleCowSubmit(newCow) {
+    this.addACow(newCow)
+      .then((res) => {
+        console.log(res);
+        return this.fetchAllCows();
+      })
+      .then((res) => {
+        this.setState(() => {
+          const newCows = [...res.data];
+          return {
+            mainCow: newCows[newCows.length - 1],
+            allCows: newCows,
+          };
+        });
+      })
+      .catch(err => console.log(err))
+  }
+
+  addACow(newCow) {
+    return axios.post("http://localhost:3000/api/cows", newCow);
   }
 
   componentDidMount() {
-    axios.get('http://localhost:3000/api/cows')
+    this.fetchAllCows()
       .then((response) => {
         this.setState(() => ({
           allCows: response.data,
           mainCow: response.data[0],
-          isLoading: false
-        }))
+          isLoading: false,
+        }));
       })
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
+  }
+
+  fetchAllCows() {
+    return axios.get("http://localhost:3000/api/cows");
   }
 
   render() {
-    return (
-      this.state.isLoading
-      ? null
-      :
+    return this.state.isLoading ? null : (
       <>
         <MainCow mainCow={this.state.mainCow} />
-        <SubmitCow />
-        <CowList cowData={this.state.allCows} handleCowClick={this.handleCowClick} />
+        <SubmitCow handleCowSubmit={this.handleCowSubmit} />
+        <CowList
+          cowData={this.state.allCows}
+          handleCowClick={this.handleCowClick}
+        />
       </>
     );
   }
